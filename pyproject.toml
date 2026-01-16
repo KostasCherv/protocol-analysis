@@ -1,0 +1,9 @@
+[project]
+name = "gearbox-showcase"
+version = "0.1.0"
+description = "Gearbox Protocol Analysis & Simulator"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "streamlit>=1.28.0",
+]
