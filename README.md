@@ -46,6 +46,9 @@ The application will open automatically in your browser at `http://localhost:850
 
 ## Mini Guide
 
+**Pre-populated Accounts:**
+The simulator includes 4 example accounts (Alice, Bob, Charlie, Dave) with positions already deployed to Yearn strategies. You can view and interact with these accounts immediately, or create new ones as described below.
+
 **Your First Position:**
 
 1. Go to **Accounts** tab → select "+ New Account"
