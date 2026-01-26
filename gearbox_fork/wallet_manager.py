@@ -22,17 +22,6 @@ USDC_WHALES = [
 ]
 
 
-def wait_for_tx(w3: Web3, tx_hash, max_wait: int = 30):
-    """Wait for transaction receipt"""
-    for i in range(max_wait):
-        try:
-            receipt = w3.eth.get_transaction_receipt(tx_hash)
-            return receipt
-        except:
-            time.sleep(1)
-    return None
-
-
 class WalletManager:
     """Simple wallet funding - set balances directly"""
 

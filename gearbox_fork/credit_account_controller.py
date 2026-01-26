@@ -122,11 +122,7 @@ class CreditAccountController:
         for call in calls:
             if call.get("action") == "repay_all_debt":
                 credit_manager = self.cm.get_credit_manager(CREDIT_MANAGER_V3)
-                repay_calls = prepare_repay_all_debt(
-                    self.cm,
-                    credit_manager,
-                    credit_account,
-                )
+                repay_calls = prepare_repay_all_debt(self.cm)
                 resolved_calls.extend(repay_calls)
             else:
                 resolved_calls.append(call)

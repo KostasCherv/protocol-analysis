@@ -242,7 +242,9 @@ with st.sidebar:
         try:
             with st.spinner(f"Funding {usdc_amount} USDC..."):
                 amount_wei = int(usdc_amount * 10**6)
-                result = wallet_manager.fund_from_whale(account_address, USDC, amount_wei)
+                result = wallet_manager.fund_from_whale(
+                    account_address, USDC, amount_wei
+                )
                 if result.get("success"):
                     st.success(f"Funded! Balance: {result['balance'] / 10**6:.2f} USDC")
                     log_transaction("Fund USDC", result, success=True)
@@ -441,9 +443,7 @@ with st.expander(
             key="add_collateral_btn",
         ):
             try:
-                with st.spinner(
-                    f"Adding {collateral_amount} USDC as collateral..."
-                ):
+                with st.spinner(f"Adding {collateral_amount} USDC as collateral..."):
                     # Step 1: Fund from whale if needed
                     token_contract = controller.cm.get_erc20(token_address)
                     balance = token_contract.functions.balanceOf(account_address).call()
@@ -646,11 +646,7 @@ with st.expander("💳 Repay Debt"):
                         credit_manager = controller.cm.get_credit_manager(
                             CREDIT_MANAGER_V3
                         )
-                        calls = prepare_repay_all_debt(
-                            controller.cm,
-                            credit_manager,
-                            st.session_state.credit_account,
-                        )
+                        calls = prepare_repay_all_debt(controller.cm)
                         result = controller.execute_multicall(
                             st.session_state.credit_account,
                             calls,
@@ -690,7 +686,11 @@ with st.expander("💸 Withdraw Collateral"):
         account_address = get_account_address(st.session_state.account_index)
 
         withdraw_amount = st.number_input(
-            "Amount (USDC)", min_value=0.0, value=1000.0, step=100.0, key="withdraw_amount"
+            "Amount (USDC)",
+            min_value=0.0,
+            value=1000.0,
+            step=100.0,
+            key="withdraw_amount",
         )
 
         token_address = USDC
@@ -707,9 +707,7 @@ with st.expander("💸 Withdraw Collateral"):
                 type="primary",
             ):
                 try:
-                    with st.spinner(
-                        f"Withdrawing {withdraw_amount} USDC..."
-                    ):
+                    with st.spinner(f"Withdrawing {withdraw_amount} USDC..."):
                         call = controller.prepare_action(
                             "withdraw_collateral",
                             token=token_address,
