@@ -1,0 +1,46 @@
+[
+  {
+    "inputs": [
+      {"internalType": "address", "name": "creditAccount", "type": "address"}
+    ],
+    "name": "creditAccountInfo",
+    "outputs": [
+      {"internalType": "uint256", "name": "borrowedAmount", "type": "uint256"},
+      {"internalType": "uint256", "name": "cumulativeIndexLastUpdate", "type": "uint256"}
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"internalType": "address", "name": "creditAccount", "type": "address"},
+      {"internalType": "uint8", "name": "task", "type": "uint8"}
+    ],
+    "name": "calcDebtAndCollateral",
+    "outputs": [
+      {
+        "components": [
+          {"internalType": "uint256", "name": "debt", "type": "uint256"},
+          {"internalType": "uint256", "name": "cumulativeIndexNow", "type": "uint256"},
+          {"internalType": "uint256", "name": "cumulativeIndexLastUpdate", "type": "uint256"},
+          {"internalType": "uint128", "name": "cumulativeQuotaInterest", "type": "uint128"},
+          {"internalType": "uint256", "name": "accruedInterest", "type": "uint256"},
+          {"internalType": "uint256", "name": "accruedFees", "type": "uint256"},
+          {"internalType": "uint256", "name": "totalDebtUSD", "type": "uint256"},
+          {"internalType": "uint256", "name": "totalValue", "type": "uint256"},
+          {"internalType": "uint256", "name": "totalValueUSD", "type": "uint256"},
+          {"internalType": "uint256", "name": "twvUSD", "type": "uint256"},
+          {"internalType": "uint256", "name": "enabledTokensMask", "type": "uint256"},
+          {"internalType": "uint256", "name": "quotedTokensMask", "type": "uint256"},
+          {"internalType": "address[]", "name": "quotedTokens", "type": "address[]"},
+          {"internalType": "address", "name": "_poolQuotaKeeper", "type": "address"}
+        ],
+        "internalType": "struct CollateralDebtData",
+        "name": "cdd",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
