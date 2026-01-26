@@ -628,7 +628,64 @@ flowchart LR
 
 ---
 
-## 6. Assumptions and Limitations
+## 6. Python Integration on Forked Mainnet
+
+### 6.1 Framework and Approach
+
+**Framework:** Streamlit web application  
+**File:** `gearbox_fork/streamlit_app.py`  
+**Run Command:** `streamlit run gearbox_fork/streamlit_app.py`
+
+**Approach:** Interacts with actual deployed Gearbox Protocol contracts on a locally forked Ethereum mainnet using Anvil. Contract ABIs are included in `gearbox_fork/abis/` (copied from Gearbox Protocol's core-v3 repository).
+
+### 6.2 Core Components
+
+- **`ForkClient`**: Anvil fork client setup and time manipulation
+- **`ContractManager`**: Contract ABI management and interaction
+- **`CreditAccountController`**: High-level controller for credit account operations
+- **`Actions`**: User action implementations
+- **`StateReader`**: On-chain state reading utilities
+- **`ActionBuilders`**: Pure functions for preparing call data
+- **`Executors`**: Transaction execution and simulation
+
+### 6.3 Implemented Features
+
+- Open credit accounts with collateral
+- Add collateral to existing accounts
+- Borrow funds (increase debt)
+- Repay debt (decrease debt)
+- Withdraw collateral
+- Close credit accounts
+- Read on-chain state (balances, health factors, debt)
+- Advance time to demonstrate interest accrual
+
+### 6.4 Technical Implementation
+
+- **Contract Interaction**: web3.py with contract ABIs (copied from Gearbox's core-v3 repository)
+- **Fork Setup**: Anvil fork of Ethereum mainnet
+- **Multicall Pattern**: Batching operations via CreditFacadeV3.multicall()
+- **State Management**: Session-based state tracking for UI persistence
+- **Error Handling**: Revert reason extraction from failed transactions
+- **Transaction Simulation**: Pre-execution simulation for safety
+
+### 6.5 Architecture
+
+- **Separation of Concerns**: Action preparation separate from execution
+- **Pure Functions**: Action builders have no side effects
+- **State Persistence**: State can be tracked in UI sessions
+- **Composability**: Actions can be batched into multicalls
+
+### 6.6 Limitations
+
+- Requires Anvil fork to be running
+- Contract ABIs must be available (included, copied from core-v3)
+- Whale addresses for funding may change over time
+- No adapter integrations (Yearn, Uniswap, etc.) in current implementation
+- Focuses on USDC-only operations
+
+---
+
+## 7. Assumptions and Limitations
 
 ### Assumptions Made
 
@@ -666,7 +723,7 @@ flowchart LR
 
 ---
 
-## 7. AI Usage
+## 8. AI Usage
 
 **Tools Used:**
 - **OpenCode with MiniMax M2.1**: Coding and analysis tasks
