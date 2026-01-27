@@ -50,17 +50,18 @@ class StateReader:
             debt = cdd[0]
             accrued_interest = cdd[4] if len(cdd) > 4 else 0
             accrued_fees = cdd[5] if len(cdd) > 5 else 0
+            total_debt_usd = cdd[6] if len(cdd) > 6 else 0
             total_value_usd = cdd[8] if len(cdd) > 8 else 0
             twv_usd = cdd[9] if len(cdd) > 9 else 0
             quoted_tokens = cdd[12] if len(cdd) > 12 else []
 
-            # Calculate total debt (principal + interest + fees)
+            # Calculate total debt (principal + interest + fees) in token units
             total_debt = debt + accrued_interest + accrued_fees
 
-            # Calculate health factor using total_debt
+            # Calculate health factor using totalDebtUSD (both in USD with 8 decimals)
             health_factor = None
-            if total_debt > 0 and twv_usd > 0:
-                health_factor = (twv_usd / total_debt) * 100  # As percentage
+            if total_debt_usd > 0 and twv_usd > 0:
+                health_factor = (twv_usd / total_debt_usd) * 100  # As percentage
 
             return {
                 "success": True,
