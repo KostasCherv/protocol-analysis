@@ -86,6 +86,8 @@ class CreditAccountController:
             return prepare_increase_debt(self.cm, kwargs["amount"])
         elif action_type == "decrease_debt":
             return prepare_decrease_debt(self.cm, kwargs["amount"])
+        elif action_type == "repay_all_debt":
+            return prepare_repay_all_debt(self.cm)
         elif action_type == "withdraw_collateral":
             return prepare_withdraw_collateral(
                 self.cm,
@@ -117,15 +119,6 @@ class CreditAccountController:
         Returns:
             Dict with success, tx_hash, receipt, error
         """
-        # Resolve special actions (like repay_all_debt)
-        resolved_calls = []
-        for call in calls:
-            if call.get("action") == "repay_all_debt":
-                credit_manager = self.cm.get_credit_manager(CREDIT_MANAGER_V3)
-                repay_calls = prepare_repay_all_debt(self.cm)
-                resolved_calls.extend(repay_calls)
-            else:
-                resolved_calls.append(call)
 
         # Simulate before executing
         account = get_account(account_index, private_key)
@@ -135,7 +128,7 @@ class CreditAccountController:
             self.cm,
             account_address,
             credit_account,
-            resolved_calls,
+            calls,
         )
 
         if not sim_result.get("success"):
@@ -152,7 +145,7 @@ class CreditAccountController:
             account_index=account_index,
             private_key=private_key,
             credit_account=credit_account,
-            calls=resolved_calls,
+            calls=calls,
         )
 
         # Update state on success
